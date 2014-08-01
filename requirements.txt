@@ -1,0 +1,6 @@
+# Flask webapp scaffolding
+Flask
+Flask-Script
+
+dennis
+requests
