@@ -1,1 +1,27 @@
-/* TODO: Put daas css stuff here. */
+.group {
+  padding: 6px;
+}
+
+.header {
+  padding: 4px;
+}
+
+.line {
+  font-family: monospace;
+  white-space: pre;
+}
+
+.warning .msg {
+  background: #ffff77;
+}
+
+.error .msg {
+  background: #ff7777;
+}
+
+footer {
+  margin-top: 10px;
+  padding: 10px;
+  background: #F8F8F8;
+  border-top: 1px solid #E7E7E7;
+}

@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 
+{% block title %}DENNIS-AS-A-SERVICE: SUMO{% endblock %}
+
 {% block content %}
 <div class="jumbotron">
-  <h1>Dennis-as-a-Service <small>SUMO</small></h1>
+  <h1>Dennis-as-a-Service <small>SUMO Edition</small></h1>
   <p>
     This web-ifies the <a href="https://dennis.readthedocs.org/">Dennis</a>
     linter allowing you to lint your .po files for issues before you check
@@ -25,7 +27,7 @@
     <h2>Lint a .po file for errors</h2>
 
     <div class="well">
-      <form method="post" action="/" role="form" class="form-horizontal">
+      <form method="post" enctype="multipart/form-data" action="/lint" role="form" class="form-horizontal">
         <div class="form-group">
           <label for="poFile" class="col-sm-2 control-label">File to lint</label>
           <div class="col-sm-10">

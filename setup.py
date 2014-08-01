@@ -12,6 +12,7 @@ setup(
         'Flask',
         'Flask-Script',
         'dennis',
+        'polib',
         'requests'
     ]
 )

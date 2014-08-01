@@ -3,8 +3,11 @@ import urlparse
 
 from flask import Blueprint, render_template, request
 
-from dennis.translator import Translator
+import polib
 import requests
+
+from dennis.linter import Linter
+from dennis.translator import Translator
 
 
 mod = Blueprint('main', __name__)
@@ -88,6 +91,62 @@ def zombie_text(text):
     return Translator([], ['zombie']).translate_string(text)
 
 
+@mod.route('/lint', methods=['POST'])
+def lint():
+    upload = request.files['pofile']
+    if not upload:
+        # Send them away
+        pass
+
+    results = []
+    metadata = []
+    calculateddata = []
+    error = ''
+    filename = upload.filename
+
+    if not upload.filename.endswith('.po'):
+        error = '%s is not an acceptable file.' % upload.filename
+
+    else:
+        contents = upload.stream.read()
+
+        # Get metadata from the pofile so we can print it out for some
+        # context.
+        po = polib.pofile(contents)
+
+        lang = ''
+        for key, val in po.metadata.items():
+            if key == 'Language':
+                lang = val
+
+            if isinstance(val, str):
+                val = val.decode('utf-8')
+
+            metadata.append((key, val))
+
+        calculateddata.append(('Percent translated', str(po.percent_translated())))
+
+        if lang:
+            calculateddata.append(('Verbatim link', 'https://localize.mozilla.org/%s/sumo/' % lang))
+
+        # FIXME: Hard-coded
+        linter = Linter(['pysprintf', 'pyformat'], [])
+
+        results = linter.verify_file(contents)
+
+        lint_results = [r for r in results if r.has_problems()]
+
+    return render_template(
+        'lint.html',
+        error=error,
+        metadata=metadata,
+        calculateddata=calculateddata,
+        results=lint_results,
+        filename=filename,
+        zip=zip  # Need this function in the template
+    )
+
+
 @mod.route('/')
 def index():
     error = ''
@@ -96,6 +155,7 @@ def index():
 
     try:
         if request.args.get('url'):
+            # Zombify a url
             url = request.args['url']
             if not url.startswith(('http://', 'https://')):
                 url = 'http://' + url
@@ -104,6 +164,7 @@ def index():
                 return zombie_site(url)
 
         elif request.args.get('text'):
+            # Zombify a string
             text = request.args['text']
             translatedstring = zombie_text(text)
 
