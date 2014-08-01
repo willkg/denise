@@ -1,7 +1,7 @@
 import HTMLParser
 import urlparse
 
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, redirect, url_for
 
 import polib
 import requests
@@ -95,12 +95,13 @@ def zombie_text(text):
 def lint():
     upload = request.files['pofile']
     if not upload:
-        # Send them away
-        pass
+        # FIXME: hard-coded url here
+        return redirect('/')
 
     results = []
     metadata = []
     calculateddata = []
+    lint_results = []
     error = ''
     filename = upload.filename
 

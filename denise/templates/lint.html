@@ -7,66 +7,66 @@
   <p class="text-center">
     {{ error }}
   </p>
-{% endif %}
+{% else %}
+  <div class="row">
+    <div class="col-md-12">
+      <h1>Linted Results: "{{ filename }}"</h1>
 
-<div class="row">
-  <div class="col-md-12">
-    <h1>Linted Results: "{{ filename }}"</h1>
-
-    <h2>Metadata</h2>
-    <dl class="dl-horizontal">
-      {% for key, val in metadata %}
-        <dt>{{ key }}</dt>
-        <dd>{{ val }}</dd>
-      {% endfor %}
-    </dl>
-
-    <h2>Calculated data</h2>
-    <dl class="dl-horizontal">
-      {% for key, val in calculateddata %}
-        <dt>{{ key }}</dt>
-        <dd>{% if val.startswith('http') %}<a href="{{ val }}">{{ val }}</a>{% else %}{{ val }}{% endif %}</dd>
-      {% endfor %}
-    </dl>
-
-    <h2>Lint results</h2>
-    {% if not results %}
-      <p>
-        Perfect! No problems!
-      </p>
-    {% else %}
-      {% for entry in results %}
-
-        {% for code, trstr, msg in entry.warnings %}
-          <div class="group">
-            <div class="header warning">
-              <div class="msg">
-                {{ code }}: {{ msg }}
-              </div>
-              {% for field, s in zip(trstr.msgid_fields, trstr.msgid_strings) %}
-                <div class="line">{{ field }} "{{ s }}"</div>
-              {% endfor %}
-              <div class="line">{{ trstr.msgstr_field }} "{{ trstr.msgstr_string.decode('utf-8') }}"</div>
-            </div>
-          </div>
+      <h2>Metadata</h2>
+      <dl class="dl-horizontal">
+        {% for key, val in metadata %}
+          <dt>{{ key }}</dt>
+          <dd>{{ val }}</dd>
         {% endfor %}
+      </dl>
 
-        {% for code, trstr, msg in entry.errors %}
-          <div class="group">
-            <div class="header error">
-              <div class="msg">
-                {{ code }}: {{ msg }}
-              </div>
-              {% for field, s in zip(trstr.msgid_fields, trstr.msgid_strings) %}
-                <div class="line">{{ field }} "{{ s }}"</div>
-              {% endfor %}
-              <div class="line">{{ trstr.msgstr_field }} "{{ trstr.msgstr_string.decode('utf-8') }}"</div>
-            </div>
-          </div>
+      <h2>Calculated data</h2>
+      <dl class="dl-horizontal">
+        {% for key, val in calculateddata %}
+          <dt>{{ key }}</dt>
+          <dd>{% if val.startswith('http') %}<a href="{{ val }}">{{ val }}</a>{% else %}{{ val }}{% endif %}</dd>
         {% endfor %}
+      </dl>
 
-      {% endfor %}
-    {% endif %}
+      <h2>Lint results</h2>
+      {% if not results %}
+        <p>
+          Perfect! No problems!
+        </p>
+      {% else %}
+        {% for entry in results %}
+
+          {% for code, trstr, msg in entry.warnings %}
+            <div class="group">
+              <div class="header warning">
+                <div class="msg">
+                  {{ code }}: {{ msg }}
+                </div>
+                {% for field, s in zip(trstr.msgid_fields, trstr.msgid_strings) %}
+                  <div class="line">{{ field }} "{{ s }}"</div>
+                {% endfor %}
+                <div class="line">{{ trstr.msgstr_field }} "{{ trstr.msgstr_string.decode('utf-8') }}"</div>
+              </div>
+            </div>
+          {% endfor %}
+
+          {% for code, trstr, msg in entry.errors %}
+            <div class="group">
+              <div class="header error">
+                <div class="msg">
+                  {{ code }}: {{ msg }}
+                </div>
+                {% for field, s in zip(trstr.msgid_fields, trstr.msgid_strings) %}
+                  <div class="line">{{ field }} "{{ s }}"</div>
+                {% endfor %}
+                <div class="line">{{ trstr.msgstr_field }} "{{ trstr.msgstr_string.decode('utf-8') }}"</div>
+              </div>
+            </div>
+          {% endfor %}
+
+        {% endfor %}
+      {% endif %}
+    </div>
   </div>
-</div>
+{% endif %}
 {% endblock content %}
