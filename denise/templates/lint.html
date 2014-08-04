@@ -34,11 +34,11 @@
           Perfect! No problems!
         </p>
       {% else %}
+        {# Show *all* the errors first, then the warnings. #}
         {% for entry in results %}
-
-          {% for code, trstr, msg in entry.warnings %}
+          {% for code, trstr, msg in entry.errors %}
             <div class="group">
-              <div class="header warning">
+              <div class="header error">
                 <div class="msg">
                   {{ code }}: {{ msg }}
                 </div>
@@ -49,10 +49,12 @@
               </div>
             </div>
           {% endfor %}
+        {% endfor %}
 
-          {% for code, trstr, msg in entry.errors %}
+        {% for entry in results %}
+          {% for code, trstr, msg in entry.warnings %}
             <div class="group">
-              <div class="header error">
+              <div class="header warning">
                 <div class="msg">
                   {{ code }}: {{ msg }}
                 </div>
