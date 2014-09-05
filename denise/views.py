@@ -7,6 +7,7 @@ import polib
 import requests
 
 from dennis.linter import Linter
+from dennis.templatelinter import TemplateLinter
 from dennis.translator import Translator
 
 
@@ -139,6 +140,56 @@ def lint():
 
     return render_template(
         'lint.html',
+        error=error,
+        metadata=metadata,
+        calculateddata=calculateddata,
+        results=lint_results,
+        filename=filename,
+        zip=zip  # Need this function in the template
+    )
+
+
+@mod.route('/linttemplate', methods=['POST'])
+def linttemplate():
+    upload = request.files['potfile']
+    if not upload:
+        # FIXME: hard-coded url here
+        return redirect('/')
+
+    results = []
+    metadata = []
+    calculateddata = []
+    lint_results = []
+    error = ''
+    filename = upload.filename
+
+    if not upload.filename.endswith('.pot'):
+        error = '%s is not an acceptable file.' % upload.filename
+
+    else:
+        contents = upload.stream.read()
+
+        # Get metadata from the pofile so we can print it out for some
+        # context.
+        po = polib.pofile(contents)
+
+        for key, val in po.metadata.items():
+            if isinstance(val, str):
+                val = val.decode('utf-8')
+
+            metadata.append((key, val))
+
+        calculateddata.append(('Verbatim link', 'https://localize.mozilla.org/projects/sumo/'))
+
+        # FIXME: Hard-coded
+        linter = TemplateLinter(['pysprintf', 'pyformat'], [])
+
+        results = linter.verify_file(contents)
+
+        lint_results = [r for r in results if r.has_problems()]
+
+    return render_template(
+        'linttemplate.html',
         error=error,
         metadata=metadata,
         calculateddata=calculateddata,

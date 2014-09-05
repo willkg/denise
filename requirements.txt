@@ -1,7 +1,7 @@
-# Flask webapp scaffolding
 Flask
 Flask-Script
 
-dennis
-polib
 requests
+
+dennis==0.5
+polib==1.0.4

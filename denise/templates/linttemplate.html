@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}DENNIS-AS-A-SERVICE: SUMO{% endblock %}
+
+{% block content %}
+{% if error %}
+  <p class="text-center">
+    {{ error }}
+  </p>
+{% else %}
+  <div class="row">
+    <div class="col-md-12">
+      <h1>Linted Results: "{{ filename }}"</h1>
+
+      <h2>Metadata</h2>
+      <dl class="dl-horizontal">
+        {% for key, val in metadata %}
+          <dt>{{ key }}</dt>
+          <dd>{{ val }}</dd>
+        {% endfor %}
+      </dl>
+
+      <h2>Calculated data</h2>
+      <dl class="dl-horizontal">
+        {% for key, val in calculateddata %}
+          <dt>{{ key }}</dt>
+          <dd>{% if val.startswith('http') %}<a href="{{ val }}">{{ val }}</a>{% else %}{{ val }}{% endif %}</dd>
+        {% endfor %}
+      </dl>
+
+      <h2>Template Lint results</h2>
+      {% if not results %}
+        <p>
+          Perfect! No problems!
+        </p>
+      {% else %}
+        {% for entry in results %}
+          {% for code, trstr, msg in entry.warnings %}
+            <div class="group">
+              <div class="header warning">
+                <div class="msg">
+                  {{ code }}: {{ msg }}
+                </div>
+                {% for line in entry.poentry.__unicode__(wrapwidth=100).splitlines() %}
+                  <div class="line">{{ line }}</div>
+                {% endfor %}
+              </div>
+            </div>
+          {% endfor %}
+
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+{% endif %}
+{% endblock content %}
