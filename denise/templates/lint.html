@@ -43,7 +43,7 @@
                   {{ code }}: {{ msg }}
                 </div>
                 {% for field, s in zip(trstr.msgid_fields, trstr.msgid_strings) %}
-                  <div class="line">{{ field }} "{{ s }}"</div>
+                  <div class="line">{{ field }} "{{ s.decode('utf-8') }}"</div>
                 {% endfor %}
                 <div class="line">{{ trstr.msgstr_field }} "{{ trstr.msgstr_string.decode('utf-8') }}"</div>
               </div>
@@ -59,7 +59,7 @@
                   {{ code }}: {{ msg }}
                 </div>
                 {% for field, s in zip(trstr.msgid_fields, trstr.msgid_strings) %}
-                  <div class="line">{{ field }} "{{ s }}"</div>
+                  <div class="line">{{ field }} "{{ s.decode('utf-8') }}"</div>
                 {% endfor %}
                 <div class="line">{{ trstr.msgstr_field }} "{{ trstr.msgstr_string.decode('utf-8') }}"</div>
               </div>
