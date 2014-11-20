@@ -8,6 +8,7 @@ import requests
 
 from dennis.linter import Linter
 from dennis.templatelinter import TemplateLinter
+from dennis.tools import withlines
 from dennis.translator import Translator
 
 
@@ -102,7 +103,6 @@ def lint():
     results = []
     metadata = []
     calculateddata = []
-    lint_results = []
     error = ''
     filename = upload.filename
 
@@ -110,8 +110,7 @@ def lint():
         error = '%s is not an acceptable file.' % upload.filename
 
     else:
-        contents = upload.stream.read()
-
+        contents = upload.stream.read().decode('utf-8')
         # Get metadata from the pofile so we can print it out for some
         # context.
         po = polib.pofile(contents)
@@ -133,19 +132,21 @@ def lint():
 
         # FIXME: Hard-coded
         linter = Linter(['pysprintf', 'pyformat'], [])
-
         results = linter.verify_file(contents)
 
-        lint_results = [r for r in results if r.has_problems()]
+    # FIXME: We should move this elsewhere
+    def entry_with_lines(poentry):
+        return withlines(poentry.linenum, poentry.original).splitlines(True)
 
     return render_template(
         'lint.html',
         error=error,
         metadata=metadata,
         calculateddata=calculateddata,
-        results=lint_results,
+        warn_results=[res for res in results if res.kind == 'warn'],
+        err_results=[res for res in results if res.kind == 'err'],
         filename=filename,
-        zip=zip  # Need this function in the template
+        entry_with_lines=entry_with_lines
     )
 
 
@@ -159,7 +160,6 @@ def linttemplate():
     results = []
     metadata = []
     calculateddata = []
-    lint_results = []
     error = ''
     filename = upload.filename
 
@@ -167,8 +167,7 @@ def linttemplate():
         error = '%s is not an acceptable file.' % upload.filename
 
     else:
-        contents = upload.stream.read()
-
+        contents = upload.stream.read().decode('utf-8')
         # Get metadata from the pofile so we can print it out for some
         # context.
         po = polib.pofile(contents)
@@ -186,16 +185,19 @@ def linttemplate():
 
         results = linter.verify_file(contents)
 
-        lint_results = [r for r in results if r.has_problems()]
+    # FIXME: We should move this elsewhere
+    def entry_with_lines(poentry):
+        return withlines(poentry.linenum, poentry.original).splitlines(True)
 
     return render_template(
         'linttemplate.html',
         error=error,
         metadata=metadata,
         calculateddata=calculateddata,
-        results=lint_results,
+        warn_results=[res for res in results if res.kind == 'warn'],
+        err_results=[res for res in results if res.kind == 'err'],
         filename=filename,
-        zip=zip  # Need this function in the template
+        entry_with_lines=entry_with_lines
     )
 
 

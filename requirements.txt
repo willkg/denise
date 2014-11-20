@@ -3,5 +3,6 @@ Flask-Script
 
 requests
 
-dennis==0.5
-polib==1.0.4
+# tip of line-nos branch
+https://github.com/willkg/dennis/archive/4d27b69f393c71f482c60792866174683515d668.tar.gz#egg=dennis
+polib==1.0.5

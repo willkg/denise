@@ -29,25 +29,36 @@
       </dl>
 
       <h2>Template Lint results</h2>
-      {% if not results %}
+      {% if not err_results and not warn_results %}
         <p>
           Perfect! No problems!
         </p>
       {% else %}
-        {% for entry in results %}
-          {% for code, trstr, msg in entry.warnings %}
-            <div class="group">
-              <div class="header warning">
-                <div class="msg">
-                  {{ code }}: {{ msg }}
-                </div>
-                {% for line in entry.poentry.__unicode__(wrapwidth=100).splitlines() %}
-                  <div class="line">{{ line }}</div>
-                {% endfor %}
+        {# Show *all* the errors first, then the warnings. #}
+        {% for msg in err_results %}
+          <div class="group">
+            <div class="header error">
+              <div class="msg">
+                {{ msg.code }}: {{ msg.msg }}
               </div>
+              {% for line in entry_with_lines(msg.poentry) %}
+                <div class="line">{{ line }}</div>
+              {% endfor %}
             </div>
-          {% endfor %}
+          </div>
+        {% endfor %}
 
+        {% for msg in warn_results %}
+          <div class="group">
+            <div class="header warning">
+              <div class="msg">
+                {{ msg.code }}: {{ msg.msg }}
+              </div>
+              {% for line in entry_with_lines(msg.poentry) %}
+                <div class="line">{{ line }}</div>
+              {% endfor %}
+            </div>
+          </div>
         {% endfor %}
       {% endif %}
     </div>

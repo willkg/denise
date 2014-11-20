@@ -29,43 +29,36 @@
       </dl>
 
       <h2>Lint results</h2>
-      {% if not results %}
+      {% if not err_results and not warn_results %}
         <p>
           Perfect! No problems!
         </p>
       {% else %}
         {# Show *all* the errors first, then the warnings. #}
-        {% for entry in results %}
-          {% for code, trstr, msg in entry.errors %}
-            <div class="group">
-              <div class="header error">
-                <div class="msg">
-                  {{ code }}: {{ msg }}
-                </div>
-                {% for field, s in zip(trstr.msgid_fields, trstr.msgid_strings) %}
-                  <div class="line">{{ field }} "{{ s.decode('utf-8') }}"</div>
-                {% endfor %}
-                <div class="line">{{ trstr.msgstr_field }} "{{ trstr.msgstr_string.decode('utf-8') }}"</div>
+        {% for msg in err_results %}
+          <div class="group">
+            <div class="header error">
+              <div class="msg">
+                {{ msg.code }}: {{ msg.msg }}
               </div>
+              {% for line in entry_with_lines(msg.poentry) %}
+                <div class="line">{{ line }}</div>
+              {% endfor %}
             </div>
-          {% endfor %}
+          </div>
         {% endfor %}
 
-        {% for entry in results %}
-          {% for code, trstr, msg in entry.warnings %}
-            <div class="group">
-              <div class="header warning">
-                <div class="msg">
-                  {{ code }}: {{ msg }}
-                </div>
-                {% for field, s in zip(trstr.msgid_fields, trstr.msgid_strings) %}
-                  <div class="line">{{ field }} "{{ s.decode('utf-8') }}"</div>
-                {% endfor %}
-                <div class="line">{{ trstr.msgstr_field }} "{{ trstr.msgstr_string.decode('utf-8') }}"</div>
+        {% for msg in warn_results %}
+          <div class="group">
+            <div class="header warning">
+              <div class="msg">
+                {{ msg.code }}: {{ msg.msg }}
               </div>
+              {% for line in entry_with_lines(msg.poentry) %}
+                <div class="line">{{ line }}</div>
+              {% endfor %}
             </div>
-          {% endfor %}
-
+          </div>
         {% endfor %}
       {% endif %}
     </div>
