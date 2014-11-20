@@ -106,10 +106,12 @@ def lint():
     error = ''
     filename = upload.filename
 
-    if not upload.filename.endswith('.po'):
-        error = '%s is not an acceptable file.' % upload.filename
+    if not upload.filename.endswith(('.po', '.pot')):
+        error = '%s is not an acceptable file .po and .pot files only..' % upload.filename
 
     else:
+        is_po = filename.endswith('.po')
+
         contents = upload.stream.read().decode('utf-8')
         # Get metadata from the pofile so we can print it out for some
         # context.
@@ -121,10 +123,15 @@ def lint():
 
             metadata.append((key, val))
 
-        calculateddata.append(('Percent translated', str(po.percent_translated())))
+        if is_po:
+            calculateddata.append(('Percent translated', str(po.percent_translated())))
 
-        # FIXME: Hard-coded
-        linter = Linter(['pysprintf', 'pyformat'], [])
+            # FIXME: Hard-coded
+            linter = Linter(['pysprintf', 'pyformat'], [])
+        else:
+            # FIXME: Hard-coded
+            linter = TemplateLinter(['pysprintf', 'pyformat'], [])
+
         results = linter.verify_file(contents)
 
     # FIXME: We should move this elsewhere
@@ -133,55 +140,6 @@ def lint():
 
     return render_template(
         'lint.html',
-        error=error,
-        metadata=metadata,
-        calculateddata=calculateddata,
-        warn_results=[res for res in results if res.kind == 'warn'],
-        err_results=[res for res in results if res.kind == 'err'],
-        filename=filename,
-        entry_with_lines=entry_with_lines
-    )
-
-
-@mod.route('/linttemplate', methods=['POST'])
-def linttemplate():
-    upload = request.files['potfile']
-    if not upload:
-        # FIXME: hard-coded url here
-        return redirect('/')
-
-    results = []
-    metadata = []
-    calculateddata = []
-    error = ''
-    filename = upload.filename
-
-    if not upload.filename.endswith('.pot'):
-        error = '%s is not an acceptable file.' % upload.filename
-
-    else:
-        contents = upload.stream.read().decode('utf-8')
-        # Get metadata from the pofile so we can print it out for some
-        # context.
-        po = polib.pofile(contents)
-
-        for key, val in po.metadata.items():
-            if isinstance(val, str):
-                val = val.decode('utf-8')
-
-            metadata.append((key, val))
-
-        # FIXME: Hard-coded
-        linter = TemplateLinter(['pysprintf', 'pyformat'], [])
-
-        results = linter.verify_file(contents)
-
-    # FIXME: We should move this elsewhere
-    def entry_with_lines(poentry):
-        return withlines(poentry.linenum, poentry.original).splitlines(True)
-
-    return render_template(
-        'linttemplate.html',
         error=error,
         metadata=metadata,
         calculateddata=calculateddata,
