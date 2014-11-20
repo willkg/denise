@@ -115,20 +115,13 @@ def lint():
         # context.
         po = polib.pofile(contents)
 
-        lang = ''
         for key, val in po.metadata.items():
-            if key == 'Language':
-                lang = val
-
             if isinstance(val, str):
                 val = val.decode('utf-8')
 
             metadata.append((key, val))
 
         calculateddata.append(('Percent translated', str(po.percent_translated())))
-
-        if lang:
-            calculateddata.append(('Verbatim link', 'https://localize.mozilla.org/%s/sumo/' % lang))
 
         # FIXME: Hard-coded
         linter = Linter(['pysprintf', 'pyformat'], [])
@@ -177,8 +170,6 @@ def linttemplate():
                 val = val.decode('utf-8')
 
             metadata.append((key, val))
-
-        calculateddata.append(('Verbatim link', 'https://localize.mozilla.org/projects/sumo/'))
 
         # FIXME: Hard-coded
         linter = TemplateLinter(['pysprintf', 'pyformat'], [])
