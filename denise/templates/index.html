@@ -10,14 +10,6 @@
     web-ifies the <a href="https://dennis.readthedocs.org/">Dennis</a>
     tools allowing you to do such diverse things as:
   </p>
-  <ul>
-    <li>lint your .po files for issues before you check them in</li>
-    <li>lint your .pot files to reduce heartache translators will encounter</li>
-    <li>translate arbitrary sites into Zombie for relieving Wednesday
-      morning doldrums&mdash;<em>other languages coming soon!</em></li>
-    <li>translate arbitrary text into Zombie for emails to your
-      colleagues&mdash;<em>other languages coming soon!</em></li>
-  </ul>
 </div>
 
 {% if error %}
@@ -31,6 +23,10 @@
     <h2 class="panel-title">Lint a .po/.pot file for errors</h2>
   </div>
   <div class="panel-body">
+    <p>
+      Lint your .po files for errors before you check them in!
+      Lint your .pot files for issues to reduce heartache translators will encounter!
+    </p>
     <form method="post" enctype="multipart/form-data" action="/lint" role="form" class="form-horizontal">
       <div class="form-group">
         <label for="poFile" class="col-sm-2 control-label">.po or .pot file to lint</label>
@@ -53,6 +49,10 @@
     <h2 class="panel-title">ZOMBIFY A WEBSITE!</h2>
   </div>
   <div class="panel-body">
+    <p>
+      Translate arbitrary sites into Zombie for relieving Wednesday
+      morning doldrums&mdash;<em>other languages coming soon!</em>
+    </p>
     <form method="get" action="/" role="form" class="form-horizontal">
       <div class="form-group">
         <label for="url" class="col-sm-2 control-label">URL:</label>
@@ -74,6 +74,10 @@
     <h2 class="panel-title">OR, ZOMBIFY TEXT!</h2>
   </div>
   <div class="panel-body">
+    <p>
+      Translate arbitrary text into Zombie for emails to your
+      colleagues&mdash;<em>other languages coming soon!</em>
+    </p>
     <form method="get" action="/" role="form" class="form-horizontal">
       <div class="form-group">
         <label for="zombifyInput" class="col-sm-2 control-label">From:</label>
