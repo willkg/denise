@@ -8,17 +8,17 @@
     <link href="{{ url_for('static', filename='css/denise.css') }}" rel="stylesheet" media="screen">
   </head>
   <body>
-    <div class="container">
+    <div class="outer-container container">
       <nav class="navbar navbar-default navbar-static-top" role="navigation">
-        <div class="container">
-          <div class="navbar-header">
-            <a class="navbar-brand" href="/">Denise <small>BETA!</small></a>
-          </div>
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">Denise <small>BETA!</small></a>
         </div>
       </nav>
 
-      {% block content %}
-      {% endblock content %}
+      <div class="container">
+        {% block content %}
+        {% endblock content %}
+      </div>
 
       <footer>
         <p>
@@ -31,7 +31,6 @@
         </p>
       </footer>
     </div>
-
     <script src="{{ url_for('static', filename='jquery-2.1.1/jquery.min.js') }}"></script>
     <script src="{{ url_for('static', filename='bootstrap-3.2.0/js/bootstrap.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/denise.js') }}"></script>
