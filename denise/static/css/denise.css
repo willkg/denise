@@ -5,6 +5,7 @@ body {
 .outer-container {
   background-color: #f1f1f1;
   background: white;
+  height: 100%;
   margin: 0 auto;
   padding: 0;
 }
