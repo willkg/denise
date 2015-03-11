@@ -27,7 +27,8 @@
       Lint your .po files for errors before you check them in!
       Lint your .pot files for issues to reduce heartache translators will encounter!
     </p>
-    <form class="form-inline" method="post" enctype="multipart/form-data" action="/lint" role="form">
+    <form class="form-inline" method="post" enctype="multipart/form-data" action="{{ url_for('lint-view') }}" role="form">
+      {{ csrf_token }}
       <div class="form-group">
         <div class="input-group">
           <span class="input-group-btn">

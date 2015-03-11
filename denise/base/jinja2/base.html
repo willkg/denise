@@ -3,9 +3,8 @@
   <head>
     <title>{% block title %}{% endblock title %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="{{ url_for('favicon') }}" rel="shortcut icon">
-    <link href="{{ url_for('static', filename='bootstrap-3.2.0/css/bootstrap.min.css') }}" rel="stylesheet" media="screen">
-    <link href="{{ url_for('static', filename='css/denise.css') }}" rel="stylesheet" media="screen">
+    <link href="{{ static('bootstrap-3.2.0/css/bootstrap.min.css') }}" rel="stylesheet" media="screen">
+    <link href="{{ static('css/denise.css') }}" rel="stylesheet" media="screen">
   </head>
   <body>
     <div class="outer-container container">
@@ -31,8 +30,8 @@
         </p>
       </footer>
     </div>
-    <script src="{{ url_for('static', filename='jquery-2.1.1/jquery.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='bootstrap-3.2.0/js/bootstrap.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/denise.js') }}"></script>
+    <script src="{{ static('jquery-2.1.1/jquery.min.js') }}"></script>
+    <script src="{{ static('bootstrap-3.2.0/js/bootstrap.min.js') }}"></script>
+    <script src="{{ static('js/denise.js') }}"></script>
   </body>
 </html>

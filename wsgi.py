@@ -1,3 +1,3 @@
 #!/usr/bin/env python
 
-from denise.main import app as application
+from denise.wsgi import application

@@ -1,8 +1,6 @@
-Flask
-Flask-Script
+Django==1.8b1
+jinja2
 
-requests
-
-# tip of line-nos branch
-https://github.com/willkg/dennis/archive/4d27b69f393c71f482c60792866174683515d668.tar.gz#egg=dennis
-polib==1.0.5
+dennis==0.6.1
+polib==1.0.6
+requests==2.5.3

@@ -1,22 +1,10 @@
 #!/usr/bin/env python
 import os
-import subprocess
+import sys
 
-from flask.ext.script import Manager
+if __name__ == "__main__":
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "denise.settings")
 
-from denise.wsgi import app
+    from django.core.management import execute_from_command_line
 
-
-manager = Manager(app)
-
-app_path = os.path.join(os.path.dirname(__file__), 'denise')
-
-
-def call_command(cmd, verbose=False):
-    if verbose:
-        print cmd
-    subprocess.call(cmd)
-
-
-if __name__ == '__main__':
-    manager.run()
+    execute_from_command_line(sys.argv)

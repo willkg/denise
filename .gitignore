@@ -1,4 +1,5 @@
 deploy.sh
 denise.egg-info/
+denise/settings_local.py
 *~
 *.pyc
