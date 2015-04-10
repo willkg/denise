@@ -1,5 +1,5 @@
-Django==1.8b1
-jinja2
+Django==1.8
+jinja2==2.7.3
 
 dennis==0.6.1
 polib==1.0.6

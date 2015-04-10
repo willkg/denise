@@ -1,0 +1,5 @@
+# Set DEBUG = True if you're doing development and False in prod
+DEBUG = True
+
+# Set the SECRET_KEY
+SECRET_KEY = ''

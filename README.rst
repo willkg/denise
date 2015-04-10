@@ -26,11 +26,16 @@ Install and configure
 
 2. Install the dependencies::
 
-       $ pip install -r requirements.txt
+     $ pip install -r requirements.txt
 
-3. Read through the settings in ``denise.py``
+3. Copy ``denise/settings_local.py-dist`` to ``denise/settings_local.py``.
+   Read through it and fill in appropriate values.
 
-   TODO: Document settings that need to be set here.
+4. Run the migrations::
+
+     $ ./manage.py migrate
+
+5. FIXME: More?
 
 
 Run server
