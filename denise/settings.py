@@ -66,7 +66,7 @@ TEMPLATES = [
             #     'django.contrib.auth.context_processors.auth',
             #     'django.contrib.messages.context_processors.messages',
             # ],
-            'environment': 'denise.jinja2_env.environment',
+            'environment': 'denise.jinja_utils.environment',
         },
     },
 ]

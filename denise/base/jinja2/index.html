@@ -27,8 +27,9 @@
       Lint your .po files for errors before you check them in!
       Lint your .pot files for issues to reduce heartache translators will encounter!
     </p>
-    <form class="form-inline" method="post" enctype="multipart/form-data" action="{{ url_for('lint-view') }}" role="form">
-      {{ csrf_token }}
+    {{ csrf() }}
+    <form class="form-inline" method="post" enctype="multipart/form-data" action="{{ url('lint-view') }}" role="form">
+      {{ csrf() }}
       <div class="form-group">
         <div class="input-group">
           <span class="input-group-btn">
@@ -57,7 +58,7 @@
     <form class="form-inline" method="get" action="/" role="form">
       <div class="form-group">
         <label class="control-label" for="url">URL:</label>
-        <input type="url" id="url" name="url" placeholder="url to zombify" {% if url %}value="{{ url }}"{% endif %}/>
+        <input type="url" id="url" name="urltotranslate" placeholder="url to zombify" value="{{ urltotranslate }}"/>
       </div>
       <button type="submit" class="btn btn-primary">ZOMBIFY</button>
     </form>
@@ -73,7 +74,7 @@
       Translate arbitrary text into Zombie for emails to your
       colleagues&mdash;<em>other languages coming soon!</em>
     </p>
-    <form method="get" action="/" role="form">
+    <form method="get" action="/" role="form-inline">
       <div class="form-group">
         <label class="control-label" for="zombifyInput">From:</label>
         <textarea class="form-control" id="zombifyInput" name="text" rows="5">{{ text }}</textarea>

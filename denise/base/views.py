@@ -19,10 +19,10 @@ def index_view(request):
     translatedstring = ''
 
     try:
-        if request.GET.get('url'):
+        if request.GET.get('urltotranslate'):
             # FIXME: This should be a different url.
             # Translate a url
-            url = request.GET.get['url']
+            url = request.GET.get['urltotranslate']
             print url
             if not url.startswith(('http://', 'https://')):
                 url = 'http://' + url
@@ -34,7 +34,7 @@ def index_view(request):
         elif request.GET.get('text'):
             # FIXME: This should be an API.
             # Translate a string
-            text = request.args['text']
+            text = request.GET.get('text', '')
             translatedstring = translate_text(text)
 
     except Exception as exc:
@@ -45,7 +45,7 @@ def index_view(request):
         'error': error,
         'text': text,
         'translatedstring': translatedstring,
-        'url': request.GET.get('url')
+        'urltotranslate': request.GET.get('urltotranslate', '')
     })
 
 
