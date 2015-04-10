@@ -1,7 +1,7 @@
 import urlparse
 
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 
 from dennis.linter import Linter
@@ -22,19 +22,18 @@ def index_view(request):
         if request.GET.get('urltotranslate'):
             # FIXME: This should be a different url.
             # Translate a url
-            url = request.GET.get['urltotranslate']
-            print url
+            url = request.GET['urltotranslate']
             if not url.startswith(('http://', 'https://')):
                 url = 'http://' + url
             parts = urlparse.urlparse(url)
             if parts.scheme in ('http', 'https') and parts.netloc:
                 resp = requests.get(url)
-                return translate_site(url, resp.text)
+                return HttpResponse(translate_site(url, resp.text))
 
         elif request.GET.get('text'):
             # FIXME: This should be an API.
             # Translate a string
-            text = request.GET.get('text', '')
+            text = request.GET['text']
             translatedstring = translate_text(text)
 
     except Exception as exc:
