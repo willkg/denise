@@ -4,3 +4,8 @@ jinja2==2.7.3
 dennis==0.6.1
 polib==1.0.6
 requests==2.5.3
+
+# For heroku hosting
+gunicorn==19.2.1
+psycopg2==2.6
+dj_database_url==0.3.0

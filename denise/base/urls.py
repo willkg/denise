@@ -11,4 +11,5 @@ urlpatterns = [
 
     url(r'^(?P<path>favicon\.ico)$', django.views.static.serve,
         {'document_root': settings.BASE_DIR + '/denise/base/static'}),
+    url(r'^static/(.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
 ]

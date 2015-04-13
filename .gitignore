@@ -3,3 +3,4 @@ denise.egg-info/
 denise/settings_local.py
 *~
 *.pyc
+/static/
