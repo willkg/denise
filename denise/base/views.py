@@ -3,6 +3,7 @@ import urlparse
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+from django.views.decorators.http import require_POST
 
 from dennis.linter import Linter
 from dennis.templatelinter import TemplateLinter
@@ -48,10 +49,10 @@ def index_view(request):
     })
 
 
-# FIXME: rewrite
+@require_POST
 def lint_view(request):
-    # FIXME: Test POST
-    upload = request.files['pofile']
+    # Check for the upload. No upload? Then redirect back to home.
+    upload = request.FILES.get('pofile', None)
     if not upload:
         return HttpResponseRedirect(reverse('index-view'))
 
@@ -59,15 +60,15 @@ def lint_view(request):
     metadata = []
     calculateddata = []
     error = ''
-    filename = upload.filename
+    filename = upload.name
 
-    if not upload.filename.endswith(('.po', '.pot')):
-        error = '%s is not an acceptable file .po and .pot files only..' % upload.filename
+    if not filename.endswith(('.po', '.pot')):
+        error = '%s is not an acceptable file .po and .pot files only..' % filename
 
     else:
         is_po = filename.endswith('.po')
 
-        contents = upload.stream.read().decode('utf-8')
+        contents = upload.read().decode('utf-8')
         # Get metadata from the pofile so we can print it out for some
         # context.
         po = polib.pofile(contents)

@@ -22,6 +22,7 @@ class URLTranslateViewTestCase(BaseTestCase):
     # FIXME
     pass
 
+
 class LintViewTestCase(BaseTestCase):
     # FIXME
     pass
