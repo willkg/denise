@@ -41,6 +41,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'django_jinja',
+
     'denise.base',
 )
 
@@ -58,21 +60,35 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'denise.urls'
 
 TEMPLATES = [
+    # Configure the Jinja2 template engine
     {
-        'BACKEND': 'django.template.backends.jinja2.Jinja2',
-        'DIRS': [],
+        'BACKEND': 'django_jinja.backend.Jinja2',
         'APP_DIRS': True,
         'OPTIONS': {
-            # 'context_processors': [
-            #     'django.template.context_processors.debug',
-            #     'django.template.context_processors.request',
-            #     'django.contrib.auth.context_processors.auth',
-            #     'django.contrib.messages.context_processors.messages',
-            # ],
-            'environment': 'denise.jinja_utils.environment',
-        },
+            # use jinja2/ for jinja templates
+            'app_dirname': 'jinja2',
+            # don't figure out which templates to render based on the
+            # file extension
+            'match_extension': '',
+            'context_processors': [
+                'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.debug',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
+                'django.template.context_processors.tz',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        }
+    },
+    # Configure the Django template engine
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [],
+        'APP_DIRS': True
     },
 ]
+
 
 WSGI_APPLICATION = 'denise.wsgi.application'
 
