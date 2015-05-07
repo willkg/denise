@@ -19,7 +19,6 @@ try:
 except ImportError:
     from django.utils.encoding import smart_text
 from django.utils.http import urlencode
-from django.utils.importlib import import_module
 from django.utils.translation import ugettext as _
 
 import jinja2
@@ -95,7 +94,7 @@ def load_helpers(force_reload=False):
 
     for app in settings.INSTALLED_APPS:
         try:
-            app_path = import_module(app).__path__
+            app_path = __import__(app).__path__
         except AttributeError:
             continue
 
