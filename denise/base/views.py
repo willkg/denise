@@ -24,18 +24,20 @@ def index_view(request):
             # FIXME: This should be a different url.
             # Translate a url
             url = request.GET['urltotranslate']
+            language = request.GET['language']
             if not url.startswith(('http://', 'https://')):
                 url = 'http://' + url
             parts = urlparse.urlparse(url)
             if parts.scheme in ('http', 'https') and parts.netloc:
                 resp = requests.get(url)
-                return HttpResponse(translate_site(url, resp.text))
+                return HttpResponse(translate_site(language, url, resp.text))
 
         elif request.GET.get('text'):
             # FIXME: This should be an API.
             # Translate a string
             text = request.GET['text']
-            translatedstring = translate_text(text)
+            language = request.GET['language']
+            translatedstring = translate_text(language, text)
 
     except Exception as exc:
         print exc

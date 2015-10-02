@@ -72,10 +72,10 @@ class LinkFixer(HTMLParser.HTMLParser):
         return output
 
 
-def translate_site(url, text):
+def translate_site(language, url, text):
     text = LinkFixer(url).transform(text)
-    return Translator([], ['html', 'zombie']).translate_string(text)
+    return Translator([], ['html', language]).translate_string(text)
 
 
-def translate_text(text):
-    return Translator([], ['zombie']).translate_string(text)
+def translate_text(language, text):
+    return Translator([], [language]).translate_string(text)

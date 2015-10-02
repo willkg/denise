@@ -48,38 +48,53 @@
 
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h2 class="panel-title">ZOMBIFY A WEBSITE!</h2>
+    <h2 class="panel-title">TRANSLATE A WEBSITE!</h2>
   </div>
   <div class="panel-body">
     <p>
-      Translate arbitrary sites into Zombie for relieving Wednesday
-      morning doldrums&mdash;<em>other languages coming soon!</em>
+      Translate arbitrary sites for relieving Wednesday morning
+      doldrums!
     </p>
     <form class="form-inline" method="get" action="/" role="form">
       <div class="form-group">
         <label class="control-label" for="url">URL:</label>
-        <input type="url" id="url" name="urltotranslate" placeholder="url to zombify" value="{{ urltotranslate }}"/>
+        <input type="url" id="url" name="urltotranslate" placeholder="url to translate" value="{{ urltotranslate }}"/>
       </div>
-      <button type="submit" class="btn btn-primary">ZOMBIFY WEBSITE</button>
+      <div class="form-group">
+        <label class="control-label" for="language">Language:</label>
+        <select name="language">
+          <option value="zombie">Zombie</option>
+          <option value="dubstep">Dubstep</option>
+          <option value="pirate">Pirate</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary">TRANSLATE WEBSITE</button>
     </form>
   </div>
 </div>
 
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h2 class="panel-title">OR, ZOMBIFY TEXT!</h2>
+    <h2 class="panel-title">OR, TRANSLATE TEXT!</h2>
   </div>
   <div class="panel-body">
     <p>
-      Translate arbitrary text into Zombie for emails to your
-      colleagues&mdash;<em>other languages coming soon!</em>
+      Translate arbitrary text for emails to your colleagues!
     </p>
-    <form method="get" action="/" role="form-inline">
+    <form method="get" action="/" role="form">
+      <div class="form-group">
+        <label class="control-label" for="language">Language:</label>
+        <select name="language">
+          <option value="zombie">Zombie</option>
+          <option value="dubstep">Dubstep</option>
+          <option value="pirate">Pirate</option>
+        </select>
+      </div>
       <div class="form-group">
         <label class="control-label" for="zombifyInput">From:</label>
         <textarea class="form-control" id="zombifyInput" name="text" rows="5">{{ text }}</textarea>
       </div>
-      <button class="btn btn-primary" type="submit">ZOMBIFY TEXT</button>
+      <button class="btn btn-primary" type="submit">TRANSLATE TEXT</button>
       <div class="form-group">
         <label class="control-label" for="zombifyOutput">To:</label>
         <textarea class="form-control" id="zombifyOutput" rows="5" readonly="">{{ translatedstring }}</textarea>
